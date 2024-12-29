@@ -1,0 +1,9 @@
+solara
+sparkfun-qwiic-relay
+adafruit-blinka
+lgpio
+circuitpython-stts22h
+aioesphomeapi
+paho-mqtt
+aiomqtt
+
