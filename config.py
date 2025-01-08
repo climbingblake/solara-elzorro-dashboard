@@ -6,6 +6,7 @@ class Config:
     TRIG_PIN = 21
     ECHO_PIN = 20
     RELAY_ADDRESS =  0x18
+
     DB_CONFIG = {
         'FILE': "database.db",
         'TABLES': {
@@ -52,3 +53,4 @@ class SolaraStore:
     relay_temp_on = solara.reactive(2)
     relay_temp_off = solara.reactive(10)
     numb_snapshots = solara.reactive(-2)
+

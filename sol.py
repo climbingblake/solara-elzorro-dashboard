@@ -7,10 +7,10 @@ from sensors import SensorManager
 from database import DatabaseManager
 from config import Config
 from aioesphomeapi import APIClient, APIConnectionError, RequiresEncryptionAPIError
-from sensors import SensorManager
 from esphome.DHT22 import DHT22
 # db = DatabaseManager()
 # db.initialize_db()
+from victron_components import VictronMqtt
 
 
 @solara.component
@@ -18,8 +18,14 @@ def Page():
     solara.lab.theme.dark = True
     sensor_manager = SensorManager()
 
+
     with solara.ColumnsResponsive():
-        SensorDisplay.BatteryDial()
+        VictronMqtt.MQTTDashboard()
+        VictronMqtt.BatteryDial()
+        VictronMqtt.AmpsDial()
+        VictronMqtt.PowerDial()
+        VictronMqtt.TTGText()
+    with solara.ColumnsResponsive():
         SensorDisplay.CombinedGraph()
 
 

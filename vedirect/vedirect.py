@@ -21,7 +21,6 @@ def int_base_guess(string_val):
 
 class VEDirect:
     encoding = 'utf-8'
-    print("-------------------------------------------------------------------------------")
     error_codes = {
         0: 'No error',
         2: 'Battery voltage too high',
@@ -136,7 +135,8 @@ class VEDirect:
         'V': {'key': 'batteryVoltage', 'mx': 0.001},
         'CS': {'key': 'mode', 'f': conv_mode},
         'PPV': {'key': 'panelPower', 'f': int},
-        'MON': {'key': '???????', 'f': int}
+        'MON': {'key': '???????', 'f': int},
+        'H10V': {'key': '??????', 'f': int},
     }
 
     divs = {
@@ -244,9 +244,8 @@ class VEDirect:
         'Minutes': ['Mins', 1, 0],
         'mV': ['V', 1000, 2],
         'Seconds': ['Secs', 1, 0],
-        'W': ['W', 1, 0],
-        'MON': ["?",100,100]
-    }
+        'W': ['W', 1, 0]
+        }
 
     def __init__(self, serialport='', timeout=60, emulate=''):
         """ Constructor for a Victron VEDirect serial communication session.
@@ -381,24 +380,24 @@ def print_data_callback(data):
     print(data)
 
 
-def main():
-    # provide a simple entry point that streams data from a VEDirect device to stdout
-    parser = argparse.ArgumentParser(description='Read VE.Direct device and stream data to stdout')
-    parser.add_argument('--port', help='Serial port to read from', type=str, default='')
-    parser.add_argument('--n', help='number of records to read (or default=-1 for infinite)', default=-1, type=int)
-    parser.add_argument('--timeout', help='Serial port read timeout, seconds', type=int, default='60')
-    parser.add_argument('--emulate', help='emulate one of [ALL, BMV_600, BMV_700, MPPT, PHX_INVERTER]',
-                        default='', type=str)
-    parser.add_argument('--loglevel', help='logging level - one of [DEBUG, INFO, WARNING, ERROR, CRITICAL]',
-                        default='ERROR')
-    args = parser.parse_args()
-    logging.basicConfig(level=args.loglevel.upper())
-    if not args.port and not args.emulate:
-        print("Must specify a port to listen.")
-        sys.exit(1)
-    ve = VEDirect(args.port, args.timeout, args.emulate.upper())
-    ve.read_data_callback(print_data_callback, args.n)
+# def main():
+#     # provide a simple entry point that streams data from a VEDirect device to stdout
+#     parser = argparse.ArgumentParser(description='Read VE.Direct device and stream data to stdout')
+#     parser.add_argument('--port', help='Serial port to read from', type=str, default='')
+#     parser.add_argument('--n', help='number of records to read (or default=-1 for infinite)', default=-1, type=int)
+#     parser.add_argument('--timeout', help='Serial port read timeout, seconds', type=int, default='60')
+#     parser.add_argument('--emulate', help='emulate one of [ALL, BMV_600, BMV_700, MPPT, PHX_INVERTER]',
+#                         default='', type=str)
+#     parser.add_argument('--loglevel', help='logging level - one of [DEBUG, INFO, WARNING, ERROR, CRITICAL]',
+#                         default='ERROR')
+#     args = parser.parse_args()
+#     logging.basicConfig(level=args.loglevel.upper())
+#     if not args.port and not args.emulate:
+#         print("Must specify a port to listen.")
+#         sys.exit(1)
+#     ve = VEDirect(args.port, args.timeout, args.emulate.upper())
+#     ve.read_data_callback(print_data_callback, args.n)
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
